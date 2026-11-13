@@ -103,7 +103,7 @@
 </div>
 <!-- Brand Logo -->
 <div class="flex-1 flex items-center justify-center">
-<img alt="GUTÊ" class="h-9 sm:h-10 max-h-12 w-auto object-contain select-none cursor-pointer" id="brand-logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnkPHxGsbap8_iAYnEMEwJZMyhxYbaUVBEWrdrQam0vNx606zDLGa6hC52czJoEk-5VrIFeq8herBZ7zpzM2o2Mi_wafefwuSPxliCch30a9ey2y7u7mgXVK75Zf_2-Ea_e_aO13oofo5vHnld7fhSDjUs_ZGhJg-ID8lvn3aDxUJ2G4KOrCU55iBE68KICL1wKDxA4zkyYyVUjF9Q9HXd1H7sNI5UoKwSdZkjKbdXBia20lLrEwn6"/>
+<img alt="GUTÊ" class="h-9 sm:h-10 max-h-12 w-auto object-contain select-none cursor-pointer" id="brand-logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHFePU0_WJlBN7NpCkNUB0K5PYnLGOIhH6LgcGvsGlw7_CWdAUc9Z8_Fh9-1D0rY3qKUV4QQZf7NP10vdU6j8hh0tgi66BM_rXiOTQQsS0wWrIWiTW3bDA4-DFvZ1xBG5l4C9G2VLVbJyCN9d5j6XGTrshLq6JJFwRUH5zABJMPnUYWf8CphCn7YxlJ2M_FdpJKY3o_Ssz3dzdQVn0xmPCkrp-OYU7YKwFg0VcQCfesjI-9Cp30ydT"/>
 </div>
 <!-- Zoom Controls -->
 <div class="w-16 flex items-center justify-end gap-1.5">
@@ -268,8 +268,9 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // 21 Curated Jewelry Items with exact official purchase links and images
+      // Curated Jewelry Items: 21 Convexo items + 5 Áurea items
       const JEWELRY_ITEMS = [
+        // Coleção Convexo (21 peças)
         { 
           id: 'item-new-1', 
           name: 'Colar Concha Wild Metalizado',
@@ -416,6 +417,42 @@
           collection: 'convexo',
           src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDil7913TmQ5mwLicO5wh7KdRJ4vAWiMyBSlZ4aSWCA5cAVucjUuTPX2VNq73JoQIjDr1j-i5XtEufBVhvYtzRkagtxUtPDPR2KpNyNrUs8fk3b5O7p06r3ZtFxPPjyVgfSGJ5f0HHLPU2KgXQbVgWkwzRPiwj2tarh9H0N33_cNb6x50J-lLNWi3ohA9m1omkHjAgeGs8AyFiolqt9XXajMSZDU1n1ExWOxb1DoZI2R1KGZizFXqDZ',
           link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-m-white-12qm7/?entry_path=category'
+        },
+        // Coleção Áurea (5 peças com links oficiais de compra atualizados)
+        {
+          id: 'item-aurea-1',
+          name: 'Brinco Áurea P Preto',
+          collection: 'aurea',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAcYh2GW1zIKGkYvAhC8prDM8RX6fVi16rviWrxG022twChiBxYhtZG5g2gjr2ps5fvYg8CJKoEorVP5PpiYeSmoJTxyYTD4lhPzOH4lISfPqhjyOehEsgOrxoX_d4ToTtJslA-aDFC-mWMnyRRt7yX00jPkR10XRo4vw1DqtVdCc_CvoiSSVaavlkviIkl-viHI9ziL8CPSg5rEC-RAE4oBhAOZjf_Y40F4DNCz7Udl_2htIS59G2',
+          link: 'https://colecionogute.com.br/produtos/brinco-aurea-p-preto/?entry_path=category'
+        },
+        {
+          id: 'item-aurea-2',
+          name: 'Brinco Áurea P Vermelho',
+          collection: 'aurea',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC5q5uODqWwUrNpXPieqQS9aLP23vDJc3n869M2sbFX1lPhNSs2aXcqVsl7BTd2_mqWkBET4Srq8KBh7dSy2BMqo-EJAznq-HpxRYhr_Whul1rQpQPtivxE4BXE-Y2noKi3QidW5CWqxuql6oC2U0UJ0WQxiix2hezB-bYFAQWoI-H9cQwnojsF5cgk0SAvwsyu29_FbNwXfWvp4hp5bFKHY8-2L9YpJMeJcn6gRRAaabpLMRBQAeOW',
+          link: 'https://colecionogute.com.br/produtos/brinco-aurea-p-vermelho/?entry_path=category'
+        },
+        {
+          id: 'item-aurea-3',
+          name: 'Brinco Áurea P Branco',
+          collection: 'aurea',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLt0d3ztFnoFN1IB4SUn328KG2oN4PI3oAJa0W78jhEKO7_lV2llwYpUVh_tnr4ymJrmTsi0DKOEVZj2FQwlkWYfo4H7HEDWx9I1Ip6VDnP0Im5bYz3DCCiEecNyZGX9rHrN3gu3zLovTMY7FIq4Zf0kstuvu__D1rZkNGjz3hcNcFRPoI4-ac7LyU3xrx2t2_6xf_Q76_RH_WkmV9dGuGNDO10liOvw3cfn_aUZN19M-3p2u4a_SP',
+          link: null
+        },
+        {
+          id: 'item-aurea-4',
+          name: 'Brinco Áurea M Preto',
+          collection: 'aurea',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDpp-X-_wPU0osrCK4JPuRTd-AZ2XZ8y8QNDyAfS2ik_AeUoRi54D0gRDXYD3dVIfYt6kSPyQ5jrGmG6Cd9Bhc6_27HYRHBvCZxKCjW-lVvAj8QXihXAJtiJo4xB0GbLCXGSDwICMhK3N0EqDyvCzZ5vqRwHBCCm5gyOsG1YFakCxhKPbOIZCcF77d3jepT6pFmS178Qg7j6uCvkjaHgQjVFjq3T01Li065tCiPA9T3yNSHyhEzzyE_',
+          link: 'https://colecionogute.com.br/produtos/brinco-aurea-m-preto/?entry_path=category'
+        },
+        {
+          id: 'item-aurea-5',
+          name: 'Brinco Áurea M Branco',
+          collection: 'aurea',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC8HWJCo-9LJN-KHZpJ1D9yNmb2-_N3o-6ngRNIlZFwnfLWqjLT5brz75kzK5soV4L-UUIuij-G_ktI-nb3SDsx2jyOUR3JDcuXE1xj7yqj5TQH02sNV7Y32eI6LqLCGEiHs0VBdosolklnyGMj3Al0_3CNTBOLGOl-9UzgxB8xWn2HOve5M9x5EOdeJodkdYKL_bAYNmh18pUV18VOcJGZe_lkFXngj-dpZBiPe90k45mzpo69_R1P',
+          link: null
         }
       ];
 
@@ -423,8 +460,8 @@
       const COLLECTIONS = [
         { id: 'geral', name: 'Geral', description: 'Todas as peças' },
         { id: 'convexo', name: 'Convexo', description: '21 peças' },
+        { id: 'aurea', name: 'Áurea', description: '5 peças' },
         { id: 'croma', name: 'Croma', emptyNote: 'Em breve' },
-        { id: 'aurea', name: 'Áurea', emptyNote: 'Em breve' },
         { id: 'corcel', name: 'Corcel', emptyNote: 'Em breve' },
         { id: 'geo', name: 'Geo', emptyNote: 'Em breve' },
         { id: 'mist', name: 'Mist', emptyNote: 'Em breve' },
@@ -433,8 +470,8 @@
         { id: 'celebra', name: 'Celebra', emptyNote: 'Em breve' }
       ];
 
-      // Restore collection state from cookie/storage
-      const savedCollection = getCookie('gute_selected_collection');
+      // Restore collection state from cookie/storage (supporting both legacy and updated keys)
+      const savedCollection = getCookie('gute_active_category') || getCookie('gute_selected_collection');
       let selectedCollectionId = (savedCollection && COLLECTIONS.some(c => c.id === savedCollection)) 
         ? savedCollection 
         : 'geral';
@@ -444,7 +481,7 @@
       JEWELRY_ITEMS.forEach(it => { itemStatusMap[it.id] = null; });
 
       // Restore item statuses from cookie/storage
-      const savedStatusJson = getCookie('gute_item_status_map');
+      const savedStatusJson = getCookie('gute_collection_state') || getCookie('gute_item_status_map');
       if (savedStatusJson) {
         try {
           const parsed = JSON.parse(savedStatusJson);
@@ -461,7 +498,9 @@
       }
 
       function persistStatus() {
-        setCookie('gute_item_status_map', JSON.stringify(itemStatusMap), 365);
+        const val = JSON.stringify(itemStatusMap);
+        setCookie('gute_collection_state', val, 365);
+        setCookie('gute_item_status_map', val, 365);
       }
 
       // Elements
@@ -535,6 +574,7 @@
               <span class="font-headline-sm text-base tracking-tight ${isSelected ? 'font-medium' : ''}">${col.name}</span>
             </div>
             <div class="flex items-center gap-2">
+              ${col.description ? `<span class="text-[11px] text-on-surface-variant/50">${col.description}</span>` : ''}
               ${col.emptyNote ? `<span class="text-[10px] uppercase tracking-wider text-on-surface-variant/40 font-medium">${col.emptyNote}</span>` : ''}
               ${isSelected ? `<span class="material-symbols-outlined text-[18px] text-primary">chevron_right</span>` : ''}
             </div>
@@ -542,6 +582,7 @@
 
           btn.addEventListener('click', () => {
             selectedCollectionId = col.id;
+            setCookie('gute_active_category', col.id, 365);
             setCookie('gute_selected_collection', col.id, 365);
             drawerCurrentTitle.textContent = col.name;
             renderCollectionsDrawer();
@@ -587,22 +628,29 @@
         imgWrapper.appendChild(img);
         card.appendChild(imgWrapper);
 
-        // Buy button rendered exclusively for "Meus Desejos"
-        if (showBuyButton && item.link) {
-          const buyBtn = document.createElement('a');
-          buyBtn.href = item.link;
-          buyBtn.target = '_blank';
-          buyBtn.rel = 'noopener noreferrer';
-          buyBtn.className = 'w-full py-2 px-3 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary hover:text-white text-primary text-[11px] font-semibold tracking-widest uppercase transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95';
-          buyBtn.innerHTML = `
-            <span>COMPRAR</span>
-            <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
-          `;
-          // Prevent card click modal trigger when clicking buy button
-          buyBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-          });
-          card.appendChild(buyBtn);
+        // Buy button rendered exclusively for "Meus Desejos" if link exists
+        if (showBuyButton) {
+          if (item.link) {
+            const buyBtn = document.createElement('a');
+            buyBtn.href = item.link;
+            buyBtn.target = '_blank';
+            buyBtn.rel = 'noopener noreferrer';
+            buyBtn.className = 'w-full py-2 px-3 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary hover:text-white text-primary text-[11px] font-semibold tracking-widest uppercase transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95';
+            buyBtn.innerHTML = `
+              <span>COMPRAR</span>
+              <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+            `;
+            // Prevent card click modal trigger when clicking buy button
+            buyBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+            });
+            card.appendChild(buyBtn);
+          } else {
+            const unavailBadge = document.createElement('div');
+            unavailBadge.className = 'w-full py-2 px-3 rounded-lg border border-outline-variant/30 bg-surface-container/60 text-on-surface-variant/60 text-[10px] font-medium tracking-widest uppercase flex items-center justify-center';
+            unavailBadge.textContent = 'INDISPONÍVEL';
+            card.appendChild(unavailBadge);
+          }
         }
 
         card.addEventListener('click', () => {
@@ -617,11 +665,11 @@
         // Catálogo filtered by Collection
         catalogContainer.innerHTML = '';
         let filteredCatalogItems = [];
-        if (selectedCollectionId === 'geral' || selectedCollectionId === 'convexo') {
+        if (selectedCollectionId === 'geral') {
+          // Geral shows all items (21 Convexo + 5 Áurea)
           filteredCatalogItems = JEWELRY_ITEMS;
         } else {
-          // Other collections are currently empty
-          filteredCatalogItems = [];
+          filteredCatalogItems = JEWELRY_ITEMS.filter(it => it.collection === selectedCollectionId);
         }
 
         if (filteredCatalogItems.length === 0) {
@@ -757,7 +805,7 @@
         { cols: 'grid-cols-1', gap: 'gap-4' }
       ];
       
-      const savedZoom = parseInt(getCookie('gute_zoom_index'), 10);
+      const savedZoom = parseInt(getCookie('gute_zoom_level') || getCookie('gute_zoom_index'), 10);
       let zoomIndex = (!isNaN(savedZoom) && savedZoom >= 0 && savedZoom <= 2) ? savedZoom : 2; // Default 1 coluna (imagem ampla)
 
       function applyZoom(index) {
@@ -768,6 +816,7 @@
           });
           container.classList.add(zoomConfigs[index].cols, zoomConfigs[index].gap);
         });
+        setCookie('gute_zoom_level', index.toString(), 365);
         setCookie('gute_zoom_index', index.toString(), 365);
       }
 
