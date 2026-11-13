@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<meta content="mobile_tab" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "tertiary": "#431d01",
+            "on-primary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-error": "#ffffff",
+            "primary-container": "#5a331e",
+            "on-primary-container": "#d39b80",
+            "background": "#fcf9f4",
+            "on-surface": "#1c1c19",
+            "on-background": "#1c1c19",
+            "on-surface-variant": "#51443e",
+            "surface-variant": "#e5e2dd",
+            "secondary": "#7a580e",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#dcdad5",
+            "inverse-surface": "#31302d",
+            "surface-container-low": "#f6f3ee",
+            "outline-variant": "#d6c3bb",
+            "error": "#ba1a1a",
+            "surface": "#fcf9f4",
+            "surface-container-high": "#ebe8e3",
+            "outline": "#83746d",
+            "surface-container": "#f0ede9",
+            "primary": "#401e0a",
+            "surface-container-highest": "#e5e2dd",
+            "surface-bright": "#fcf9f4"
+          },
+          fontFamily: {
+            "display-hero": ["Playfair Display"],
+            "headline-sm": ["Playfair Display"],
+            "body-md": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 16px);
+      }
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .earring-card {
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+      user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      box-sizing: border-box;
+    }
+    .earring-card:active {
+      transform: scale(0.97);
+    }
+    .status-my-pieces {
+      border: 4px solid #10b981 !important;
+      box-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.35);
+    }
+    .status-wishes {
+      border: 4px solid #e11d48 !important;
+      box-shadow: 0 4px 20px -2px rgba(225, 29, 72, 0.35);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col antialiased selection:bg-amber-100 selection:text-amber-900">
+<!-- Fixed Top Bar -->
+<header class="fixed top-0 inset-x-0 z-40 pt-safe bg-surface/90 backdrop-blur-md border-b border-surface-container/60 shadow-[0_1px_6px_rgba(64,30,10,0.03)]">
+<div class="h-16 px-4 max-w-md mx-auto flex items-center justify-between relative">
+<!-- Menu Button (Hamburger) -->
+<div class="w-16 flex items-center justify-start">
+<button aria-label="Abrir Menu de Coleções" class="w-9 h-9 -ml-1 flex items-center justify-center rounded-full text-primary hover:bg-surface-container active:scale-90 transition-all" id="btn-open-menu" type="button">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+</div>
+<!-- Brand Logo -->
+<div class="flex-1 flex items-center justify-center">
+<img alt="GUTÊ" class="h-9 sm:h-10 max-h-12 w-auto object-contain select-none cursor-pointer" id="brand-logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnkPHxGsbap8_iAYnEMEwJZMyhxYbaUVBEWrdrQam0vNx606zDLGa6hC52czJoEk-5VrIFeq8herBZ7zpzM2o2Mi_wafefwuSPxliCch30a9ey2y7u7mgXVK75Zf_2-Ea_e_aO13oofo5vHnld7fhSDjUs_ZGhJg-ID8lvn3aDxUJ2G4KOrCU55iBE68KICL1wKDxA4zkyYyVUjF9Q9HXd1H7sNI5UoKwSdZkjKbdXBia20lLrEwn6"/>
+</div>
+<!-- Zoom Controls -->
+<div class="w-16 flex items-center justify-end gap-1.5">
+<button aria-label="Diminuir Zoom" class="w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container active:scale-90 transition-all" id="zoom-out" type="button">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<button aria-label="Aumentar Zoom" class="w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container active:scale-90 transition-all" id="zoom-in" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Collections Side Drawer Menu -->
+<div class="fixed inset-0 z-50 transition-opacity duration-300 opacity-0 pointer-events-none" id="drawer-menu">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-primary/30 backdrop-blur-[2px] transition-opacity" id="drawer-backdrop"></div>
+<!-- Drawer Box -->
+<div class="absolute top-0 bottom-0 left-0 w-4/5 max-w-[300px] bg-surface-bright shadow-2xl flex flex-col justify-between pt-safe pb-safe transform transition-transform duration-300 -translate-x-full border-r border-surface-container" id="drawer-panel">
+<div>
+<!-- Drawer Header -->
+<div class="h-16 px-5 flex items-center justify-between border-b border-surface-container">
+<div>
+<span class="font-label-sm text-[11px] font-semibold tracking-[0.2em] text-on-surface-variant uppercase">Coleções</span>
+<h2 class="font-headline-sm text-lg text-primary tracking-tight font-serif" id="drawer-current-title">Geral</h2>
+</div>
+<button aria-label="Fechar Menu" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container active:scale-90 transition-all" id="btn-close-menu" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Collections List -->
+<div class="py-2.5 overflow-y-auto max-h-[calc(100vh-140px)]" id="collections-list">
+<!-- Rendered via JS -->
+</div>
+</div>
+<!-- Drawer Footer -->
+<div class="p-5 border-t border-surface-container/80 bg-surface-container-low/40">
+<p class="text-[11px] font-medium tracking-widest uppercase text-on-surface-variant/60">GUTÊ • The Art of Accessories</p>
+</div>
+</div>
+</div>
+<!-- Main Content Container with Adjusted Top Spacing for Mobile -->
+<main class="flex-1 w-full max-w-md mx-auto px-4 pt-28 pb-24">
+<!-- Tab 1: Catálogo -->
+<section class="tab-content block" id="tab-catalogo">
+<div class="grid py-2 transition-all duration-300 grid-cols-1 gap-4" id="catalog-container"></div>
+<div class="flex flex-col items-center justify-center text-center py-28 px-4 hidden" id="empty-catalog">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant/35 mb-2.5">auto_awesome</span>
+<p class="font-headline-sm text-base text-on-surface-variant/70 font-normal italic mb-1" id="empty-catalog-title">Nenhuma peça nesta coleção ainda.</p>
+<p class="text-xs text-on-surface-variant/50 font-normal">Em breve novos lançamentos exclusivos.</p>
+</div>
+</section>
+<!-- Tab 2: Minhas Peças -->
+<section class="tab-content hidden" id="tab-minhas-pecas">
+<div class="grid py-2 transition-all duration-300 grid-cols-1 gap-4" id="my-pieces-container"></div>
+<div class="flex flex-col items-center justify-center text-center py-28 px-4" id="empty-my-pieces">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant/35 mb-2.5">diamond</span>
+<p class="font-headline-sm text-base text-on-surface-variant/60 font-normal italic">Nenhuma peça selecionada ainda.</p>
+</div>
+</section>
+<!-- Tab 3: Meus Desejos -->
+<section class="tab-content hidden" id="tab-meus-desejos">
+<div class="grid py-2 transition-all duration-300 grid-cols-1 gap-4" id="wishes-container"></div>
+<div class="flex flex-col items-center justify-center text-center py-28 px-4" id="empty-wishes">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant/35 mb-2.5">favorite</span>
+<p class="font-headline-sm text-base text-on-surface-variant/60 font-normal italic">Nenhuma peça selecionada ainda.</p>
+</div>
+</section>
+</main>
+<!-- Options Modal Sheet -->
+<div class="fixed inset-0 z-50 transition-opacity duration-200 opacity-0 pointer-events-none flex items-end justify-center" id="options-modal">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-primary/25 backdrop-blur-[2px]" id="modal-backdrop"></div>
+<!-- Modal Box -->
+<div class="relative z-10 w-full max-w-sm mx-auto bg-surface-bright rounded-t-2xl shadow-2xl border-t border-surface-container p-5 pb-safe transform transition-transform duration-250 translate-y-full" id="modal-sheet">
+<div class="w-9 h-1 bg-outline-variant/60 rounded-full mx-auto mb-4"></div>
+<div class="flex flex-col gap-2.5">
+<!-- Option: Minhas Peças -->
+<button class="w-full flex items-center justify-between px-4 py-3.5 rounded-xl border border-emerald-500/30 bg-emerald-50 hover:bg-emerald-100/70 text-emerald-950 font-medium text-sm transition-all active:scale-[0.98]" id="btn-select-my-pieces" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-emerald-600 text-[20px]">diamond</span>
+<span>Minha Coleção</span>
+</div>
+<span class="material-symbols-outlined text-emerald-600 text-[18px] hidden" id="badge-my-pieces">check_circle</span>
+</button>
+<!-- Option: Meus Desejos -->
+<button class="w-full flex items-center justify-between px-4 py-3.5 rounded-xl border border-rose-500/30 bg-rose-50 hover:bg-rose-100/70 text-rose-950 font-medium text-sm transition-all active:scale-[0.98]" id="btn-select-wishes" type="button">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-rose-600 text-[20px]">favorite</span>
+<span>Meus Desejos</span>
+</div>
+<span class="material-symbols-outlined text-rose-600 text-[18px] hidden" id="badge-wishes">check_circle</span>
+</button>
+<!-- Option: Remover Seleção / Limpar seleção -->
+<button class="w-full py-2.5 text-center text-xs font-medium text-rose-700/80 hover:text-rose-900 transition-colors hidden" id="btn-remove-selection" type="button">
+          Remover seleção
+        </button>
+</div>
+</div>
+</div>
+<!-- Fixed Bottom Navigation Bar -->
+<nav class="fixed bottom-0 inset-x-0 z-40 pb-safe bg-surface/95 backdrop-blur-md border-t border-surface-container shadow-[0_-2px_10px_rgba(64,30,10,0.04)]">
+<div class="h-16 px-4 flex items-center justify-around max-w-md mx-auto">
+<button class="nav-tab active flex flex-col items-center justify-center flex-1 py-1 text-primary transition-colors" data-target="tab-catalogo" type="button">
+<span class="material-symbols-outlined text-[22px]">grid_view</span>
+<span class="font-label-sm text-[10px] tracking-wider uppercase font-medium mt-1">Catálogo</span>
+</button>
+<button class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-primary transition-colors" data-target="tab-minhas-pecas" type="button">
+<span class="material-symbols-outlined text-[22px]">diamond</span>
+<span class="font-label-sm text-[10px] tracking-wider uppercase font-medium mt-1">Minha Coleção</span>
+</button>
+<button class="nav-tab flex flex-col items-center justify-center flex-1 py-1 text-on-surface-variant hover:text-primary transition-colors" data-target="tab-meus-desejos" type="button">
+<span class="material-symbols-outlined text-[22px]">favorite</span>
+<span class="font-label-sm text-[10px] tracking-wider uppercase font-medium mt-1">Meus Desejos</span>
+</button>
+</div>
+</nav>
+<script>
+    // Storage and Cookie Utility Functions
+    function setCookie(name, value, days = 365) {
+      try {
+        const d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + d.toUTCString();
+        document.cookie = `${name}=${encodeURIComponent(value)};${expires};path=/;SameSite=Lax`;
+      } catch (e) {
+        // Fallback or ignore if blocked
+      }
+      try {
+        localStorage.setItem(name, value);
+      } catch (e) {
+        // LocalStorage fallback handled
+      }
+    }
+
+    function getCookie(name) {
+      let value = null;
+      try {
+        const cname = name + "=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(cname) === 0) {
+            value = c.substring(cname.length, c.length);
+            break;
+          }
+        }
+      } catch (e) {
+        value = null;
+      }
+      if (value === null || value === undefined || value === '') {
+        try {
+          value = localStorage.getItem(name);
+        } catch (e) {
+          value = null;
+        }
+      }
+      return value;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 21 Curated Jewelry Items with exact official purchase links and images
+      const JEWELRY_ITEMS = [
+        { 
+          id: 'item-new-1', 
+          name: 'Colar Concha Wild Metalizado',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAAySEmFrwaYkQUuXQmWW4h74zcDlhVSi3iz4INHOPjhasKMLrnfwutgj7enT0HINEJ0LR3W3f8KnYgRe5qjkizhfy1dovbMevmsjk06xjoNpiUsZpXBaW3TIEMuqRSkm_shU86-kMttThT15uDST9WtzGeD9Dza2XiNL0WPA9D2k1G2r1t4EMltuTqNkXJl9G74OYCawXE0nR029yZBkQTGPRSVXJHZ8cftWeigrhGEPVUl9iF-PQq',
+          link: 'https://colecionogute.com.br/produtos/colar-concha-wild-metalizado-siz5g/?entry_path=category'
+        },
+        { 
+          id: 'item-new-2', 
+          name: 'Colar Concha Wild Blue',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCRP4RjYTBr8vtF2XDH41ahWWE_Sbo36VUxJq2E0_Tea8kINxlHSQrfLzmgjHQ_0idEnZ7tIUSbUHRbKOPe6FDcdKQHpJ3N4IA8b4qugLtZrmVoecwAha_X4oONt9UcVusJtYIIO00kTizsv5O3p6wtuJFp3LJnvcLOeuyj76mMrElNEm60qEI1XrG1iVMyGtA-VCjrc_N799C2UBUBFWU9CUTv_SI_Q1GWCoN0rCOBnDwq1KQk0ZVt',
+          link: 'https://colecionogute.com.br/produtos/colar-concha-wild-blue-11ys5/?entry_path=category'
+        },
+        { 
+          id: 'item-new-3', 
+          name: 'Colar Concha Wild White',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCxXXa1RnM5_LGHBkp9Tg93sk7oPIFPNbDsmxqGsfY-NjNE5JuSUxSrO28T3d5jrQ0c2l7dI9WG2Ke_m_FRpY1lWvqC83hQDxxzRMip1CcT2FNg4CgqwYmi_G-WBvlvX8bgMdNRkAbRGm_hnfQKvF4XOh2EuesN1qr8hE3SlHDE2IH5FALC_XIiOjDxEmfIMJFijr8clMXisi3XY3hP7dZR8OQuJyoeohxWbCsjkLjawK33LS0agjke',
+          link: 'https://colecionogute.com.br/produtos/colar-concha-wild-white-1jltn/?entry_path=category'
+        },
+        { 
+          id: 'item-new-4', 
+          name: 'Brinco Concha G White',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB-ah1IPl46SboSk9dEulKs93fvJt1q4Lt5t5UCQFtIVdw7bRv3y_WjYFmfTuTApiem_eH9HSdEEuf5fCjbFCRP2N_e_zqF_i2mCaj5MNlC25zzOw7ZosurURRIUG6HZgKh0jpFfxwkk73RQ5rsD5-Eh3_KCeN_NuWb0zr77Xk6HTLMj6U0JqO_L8Iv8QZgzMOPbOj-9A7ukj3npvXfD53RgQkm4CKPabaGNrV4aBxeOoIO7q7mcsbh',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-g-white-1oum5/?entry_path=category'
+        },
+        { 
+          id: 'item-new-5', 
+          name: 'Brinco Concha G Olive',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBw2X9Os-YhEKdmwqeGUR65hdwd-77ol0Jm4zOtfPxWO6vvxhNX7U3g8DPtfY4nw9lg0238yJKu-r2JQhhCWlpgMIHeu00ZP0Lf4M6OI5LkcbUxHAqfQn8Eo31999IKA9jcR8QOs8FnekzROdomfvLXBiZ4wTBByknuMfaMuXK5PLOLuaQJVaCE1taM-oCwu15lzz-szXDSUpmJNQ1ubrOqlHNdlMZMg1fcVMuD2RSeyvWO-BBNj9yc',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-g-olive-1aqr2/?entry_path=category'
+        },
+        { 
+          id: 'item-new-6', 
+          name: 'Brinco Concha G Purple',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAoh-VPiIJU4gtHeHnmWTvp6ydn9AuVbgW6k9pUvlXwV9keXsMdXO54JUGlqeIauRoTr2qCff62V2GnLxalcW7vQupReM7F_IndgQj2M5rPO6u7i7sRju58QoXZT68mK7ABRhIbsSQIXahIVI2eiHxoI52bi6lGQQIN3D8DpSOTcZv21h7cx7GeaMArlnFO4M-w2gh4QGFIfe6K93HH58SYVba5kjBfR4_bORkaWASC8irCVv-ZPvCg',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-g-purple-1kiqd/?entry_path=category'
+        },
+        { 
+          id: 'item-new-7', 
+          name: 'Brinco Concha G Blue',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD7PXDlQbzUGpHkO8GSMaARsUUTGTuLsSl_5InWtviysZ_Qnf-L2rFxgVfBtisCTgMnx8Z_3bS6fsHVKdM18-LuDFUJWwjfGDFKvHZXVWSFgZUkPoONuVITnplESq0L76GgIQx6pXkQTyN4jtbZXoxIxX_FCYLjgyfdpeTLekxrLi29PdsXR6ba_5yLaH6-S3-fTYOx8khSjt29ByKWkgwcU09zsrygCvTUj3y1gkr92BSZp2i_bM4y',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-g-blue-wte35/?entry_path=category'
+        },
+        { 
+          id: 'item-new-8', 
+          name: 'Brinco Concha G Metalizado',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBu5oxtwaD1iZJ5YQm39l1ApuGQFMKHjJu1lKnrCUz_ple_mSIukV6s4wlBc3JMN-ptIn8vXs_7FwGrKfiKtpMCWgk5qjLpsG0ynBT3Xo_aO6Ric7RSUtfdZbbvwkUvCvGTDbsvQwrtz5l_asUsYaSSla4n9XZSfBTR7huRFZoq-pLUWmwft-nHZiygF5sgiB8mXu7WFhnKzWSgFYHRH7jgwYkcy_XmSCgST9ZHiOLq2XFgjHjLqneB',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-g-metalizado/?entry_path=category'
+        },
+        { 
+          id: 'item-new-9', 
+          name: 'Brinco Concha G Listras Preto',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDzxzW6iWF1vr5UP2rEm-OHsmGWdxbHN-nE4H_4-bgc88W90Wrf0NzxsA8AxVN5FwsUnLP2TGI_ixp6ckVwxndvSo1cofCxfWJ0owpfc1htoD0LCqpCpvtavu9qGT_ICs25ZoPvEqSM2YwnHZY_3gvbnbFi7hzDqwdctAHNl52RKAGty_fDTEz84AmD29otuT-UUJmOw3uolui7MVSLz56aIGUxNucFDaND3WH8NBLVUbzOlMuizwHg',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-g-listras-preto/?entry_path=category'
+        },
+        { 
+          id: 'item-1', 
+          name: 'Brinco Concha Wild P Blue',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLhCaJsVhq414PCDQRfBl0EHwiK8ctb7cbvyCy-vTHh8Q-EDA1aGXSkB0y7UCrgiSBdT5WMFjTqUbXqdkzoTwdnUMwnDSjFGAXJFG8R_5X3-NRVNq1f6sAOKt64ydTBibB2xedNSE3rxI4ikp3UR1IoreWbTlr5l2CVHPY_0nO2uOM-xbxiZk1c40PoKQn8UhQjVrsyuOIodBgZI6AUKb8G-BwHxhJm8Ia_9okpemWV3pl_RJnaky8',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-p-blue-14pr3/?entry_path=category'
+        },
+        { 
+          id: 'item-2', 
+          name: 'Brinco Concha Wild P White',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC1Fmx2MhFmon8mqDegTkZB-64OGRfDUGkZH91B6Y1gfh_IHXTlzK99lNCxUG4KHQymiLQ3tX67_7IXUKOQ96H3vKqzjN2xTG84RBk_Kjzd8Al0tr29cQNolek49T3031XIBmaZje0VIu3srSRVcwMbRn0Dr9rXN3-O-0nyXGkR-_grmjeH0RUc2bgLffhTOQy162-yg-alI-vKLZvjel2ZDg-Q2vh4Eh22w514wHJPvXxp4aI0G5Nd',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-p-white-17vtk/?entry_path=category'
+        },
+        { 
+          id: 'item-3', 
+          name: 'Brinco Concha Wild P Olive',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBtagsEQxt-4g9dxb1hfTPmctK7jMmD4h47tQwiZSUgUnJvzgPw6VfesJGfx4MuGCVziFuqI40mJMBnxG0MCQcXNz8cgq5xTEZd86l9GA6pDQcVXGSwtoo4FnUo_Koc691vGhikwyxuW9tjJ9sqZ4dAqbaLnptUFU3TITqZnDUHdJOMZUtxFh8UvEUn76BSwDGw-plkYgGedE23C-oqVBupqruMB4dhuuWCcoKw0fxAkkgYONGLikGs',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-p-olive-6260l/?entry_path=category'
+        },
+        { 
+          id: 'item-4', 
+          name: 'Brinco Concha Wild P Purple',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBrg40MJS4RPXOw1XRk7J9fP4obDoXXHtm147hUwYoS2i4bRg9kDERCJfOvhShkTNtGxnDYX_lrTTINaQT2U5SHoOEtx5_CFxG20SCUOdOxR-yTX4MYPdB4NGmhZUuk3t3y-MhzCmVGBGVTMP8umGYt0kkUiC43lrgmBvfpC6G1KtWLd0mOIxT9WUtUhUblGcAXJ8rCVwUNd4dGID4FoerH2wK0udK3uCbcs9InPz4q-rT-6H6QbqQx',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-p-purple-og5dx/?entry_path=category'
+        },
+        { 
+          id: 'item-5', 
+          name: 'Brinco Concha Wild P Listras Preto',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAqgrt5RvqXBTRHujEf3v5mVR0Y1DL2x5lF4t0wMJsa-vRNPjglgixQsY8OhTcP2bVTMivnJSyDP4BZtj8yKLgOmtcGaGAMzkPYoLlq9NvxHz-sA8mXHZOQyNLgVYtlLvfuHF_IoXxm9WMzLw5K-iCRxpl9qMV8aZ5uOb1MViZON21eddNPBdhrrzNw8k9gSjvA1T0g4UGmvl6F6fPY-gVAxiLMikwYjI_AKEKgFDCcJBihsHjZVLMP',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-p-listras-preto-19m14/?entry_path=category'
+        },
+        { 
+          id: 'item-6', 
+          name: 'Brinco Concha Wild P Metalizado',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_2BX1y48o7Sh_FkQuyQ8KYP58fPF1hP4L1veNMo4esOgQGAmnw9eK5T_2Ipei_A8k-612U__f7mDCEh74vNzCBRvIX4xCDSXQuIdqE4oaroJz4fM7zVfwrr9Ckxc1ynv7H5IYseYIdK9UQspF4gL0fHDa9kAMTrmh4IejRBaLptnGocfYrSqlJNaibu6ON2PQqJWDBsE-SL1p8HYi0nErVj-sp01wqd-zegg9uuiNQfCzl4bXbW6E',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-p-metalizado-1effk/?entry_path=category'
+        },
+        { 
+          id: 'item-7', 
+          name: 'Brinco Concha M Metalizado',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAWHfkSEaQB-HQXuvD0GOVvvZcsV2FeQjXpDjh07EzSeF_2Psd5t6Ltak2D_hAA_9k625hHgbPWijKGgidhNBY8F6vGk5fqec7LQzGovDKm1ZnUeB8vAhRvMYHda3l6n8fBJyroJ5MO6cnxnBaJfRhry8If_EMrSETG332ngVifqcBbL27TPDwHEPqL0jsw8h46Zv7PyZ6dhfsh-0ecQnwIWXklOVp70tb-pcR4NDxvqBJ7RxrUbzlN',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-m-metalizado/?entry_path=category'
+        },
+        { 
+          id: 'item-8', 
+          name: 'Brinco Concha M Listras Preto',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAh0nx4297arL47VcrzRtTUF7aQ2uiefU0po_8ynKoAB3JnAYW5WEIQFPmayoLVXlTsf6abCAMCA1IO0hDEQOG0fq6v0eUtYouf3hYas9dskNXrk2dIplQADcjGT3rrOqL8RfXZEjuwYlUZLc4bTaP6WLdFxMxIiVYiE5_7enVWp2yvvzqWn9fTDyA2B8Vi4MeP0_lJ2MP-c9V2w2FhuSQRUNg9KcsJ1ReVoRA6Ye2cu-kiCF7u8Y78',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-m-listras-preto/?entry_path=category'
+        },
+        { 
+          id: 'item-9', 
+          name: 'Brinco Concha Wild M Olive',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAtaf7fsui3V2E4Gu_kbBLUuyZaH4DSHoqNhxC29mmCkvkST4allTJkVE3iguH2kuC5tZ-MqbhvNVtQLtBGDDhCnD7E12GnTc6lq5psnc_mkhJy-dZ_iJcXuRu5BeB23vQ_xVpLjzy-JTG87p9yIwS4W3I_WNpn2SkpFaIub-KkQTQPHYFPmxigKeZX5hUtMp6DXd6cwVGQKcqY53cJQBZaFRoigH90GJ7TbdhnWLbeAU7HXT8bVlRQ',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-m-olive-1eft6/?entry_path=category'
+        },
+        { 
+          id: 'item-10', 
+          name: 'Brinco Concha Wild M Blue',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBoD2QejjXEvmdI-Ilu1jQVjGhp8a8A1dE2GU30-1j51osqK7ZvkmzfKuInM8GCy9PmAcLhlkhqs3PzQmkPbYnu6fz6moOICjaJxtOfMxRW47Cm8Idmnt_zwpFDlNw_4rTB4YH4HojqawKvjPJSiYfXZgSMffB7guE7ZD_pkeItwQCAHkO4PcYQiPjXOTUmevVyfstuVA0FqDsDi9lClmi693jyD5bwQys3mFh3uPizTYx-7LVueGYj',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-m-blue-1miti/?entry_path=category'
+        },
+        { 
+          id: 'item-11', 
+          name: 'Brinco Concha Wild M Purple',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA-jXByOfO9_cqRS_mI5tlvT5FZMWVvSONI7OkkdkIHURvL_Nqfw8wt4p1F4EUoVHNhmjgfC9UpYd2LK3cv1LueN32qvaFmU2vJbv7ninz8kn7uNlsoFxKrOMN2Eg8_uQBfQNe0oUpA1KdmsTlOhBo8cVs0YiPGR1XNlEWn_pX5Hfw3yfFD1pm_1ybHTFqE_G61UnehZFDvGBNi5aFfhOcacv6WAgB6Oe3ySVaEneM7lEzqguNv8E3v',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-m-purple-ciecc/?entry_path=category'
+        },
+        { 
+          id: 'item-12', 
+          name: 'Brinco Concha Wild M White',
+          collection: 'convexo',
+          src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDil7913TmQ5mwLicO5wh7KdRJ4vAWiMyBSlZ4aSWCA5cAVucjUuTPX2VNq73JoQIjDr1j-i5XtEufBVhvYtzRkagtxUtPDPR2KpNyNrUs8fk3b5O7p06r3ZtFxPPjyVgfSGJ5f0HHLPU2KgXQbVgWkwzRPiwj2tarh9H0N33_cNb6x50J-lLNWi3ohA9m1omkHjAgeGs8AyFiolqt9XXajMSZDU1n1ExWOxb1DoZI2R1KGZizFXqDZ',
+          link: 'https://colecionogute.com.br/produtos/brinco-concha-wild-m-white-12qm7/?entry_path=category'
+        }
+      ];
+
+      // Collections List Definition
+      const COLLECTIONS = [
+        { id: 'geral', name: 'Geral', description: 'Todas as peças' },
+        { id: 'convexo', name: 'Convexo', description: '21 peças' },
+        { id: 'croma', name: 'Croma', emptyNote: 'Em breve' },
+        { id: 'aurea', name: 'Áurea', emptyNote: 'Em breve' },
+        { id: 'corcel', name: 'Corcel', emptyNote: 'Em breve' },
+        { id: 'geo', name: 'Geo', emptyNote: 'Em breve' },
+        { id: 'mist', name: 'Mist', emptyNote: 'Em breve' },
+        { id: 'icon', name: 'Icon', emptyNote: 'Em breve' },
+        { id: 'puffer', name: 'Puffer', emptyNote: 'Em breve' },
+        { id: 'celebra', name: 'Celebra', emptyNote: 'Em breve' }
+      ];
+
+      // Restore collection state from cookie/storage
+      const savedCollection = getCookie('gute_selected_collection');
+      let selectedCollectionId = (savedCollection && COLLECTIONS.some(c => c.id === savedCollection)) 
+        ? savedCollection 
+        : 'geral';
+
+      // Item statuses: null | 'my-pieces' | 'wishes'
+      const itemStatusMap = {};
+      JEWELRY_ITEMS.forEach(it => { itemStatusMap[it.id] = null; });
+
+      // Restore item statuses from cookie/storage
+      const savedStatusJson = getCookie('gute_item_status_map');
+      if (savedStatusJson) {
+        try {
+          const parsed = JSON.parse(savedStatusJson);
+          if (parsed && typeof parsed === 'object') {
+            Object.keys(parsed).forEach(id => {
+              if (itemStatusMap.hasOwnProperty(id)) {
+                itemStatusMap[id] = parsed[id];
+              }
+            });
+          }
+        } catch (e) {
+          // ignore corrupted data
+        }
+      }
+
+      function persistStatus() {
+        setCookie('gute_item_status_map', JSON.stringify(itemStatusMap), 365);
+      }
+
+      // Elements
+      const catalogContainer = document.getElementById('catalog-container');
+      const emptyCatalog = document.getElementById('empty-catalog');
+      const emptyCatalogTitle = document.getElementById('empty-catalog-title');
+      const myPiecesContainer = document.getElementById('my-pieces-container');
+      const wishesContainer = document.getElementById('wishes-container');
+      const emptyMyPieces = document.getElementById('empty-my-pieces');
+      const emptyWishes = document.getElementById('empty-wishes');
+
+      const modal = document.getElementById('options-modal');
+      const modalBackdrop = document.getElementById('modal-backdrop');
+      const modalSheet = document.getElementById('modal-sheet');
+      const btnSelectMyPieces = document.getElementById('btn-select-my-pieces');
+      const btnSelectWishes = document.getElementById('btn-select-wishes');
+      const btnRemoveSelection = document.getElementById('btn-remove-selection');
+      const badgeMyPieces = document.getElementById('badge-my-pieces');
+      const badgeWishes = document.getElementById('badge-wishes');
+
+      // Drawer Elements
+      const drawerMenu = document.getElementById('drawer-menu');
+      const drawerBackdrop = document.getElementById('drawer-backdrop');
+      const drawerPanel = document.getElementById('drawer-panel');
+      const btnOpenMenu = document.getElementById('btn-open-menu');
+      const btnCloseMenu = document.getElementById('btn-close-menu');
+      const collectionsListEl = document.getElementById('collections-list');
+      const drawerCurrentTitle = document.getElementById('drawer-current-title');
+
+      const initialColObj = COLLECTIONS.find(c => c.id === selectedCollectionId);
+      if (drawerCurrentTitle && initialColObj) {
+        drawerCurrentTitle.textContent = initialColObj.name;
+      }
+
+      let currentSelectedItemId = null;
+
+      // Drawer Control Functions
+      function openDrawer() {
+        drawerMenu.classList.remove('opacity-0', 'pointer-events-none');
+        drawerMenu.classList.add('opacity-100');
+        requestAnimationFrame(() => {
+          drawerPanel.classList.remove('-translate-x-full');
+        });
+      }
+
+      function closeDrawer() {
+        drawerPanel.classList.add('-translate-x-full');
+        drawerMenu.classList.remove('opacity-100');
+        drawerMenu.classList.add('opacity-0', 'pointer-events-none');
+      }
+
+      btnOpenMenu.addEventListener('click', openDrawer);
+      btnCloseMenu.addEventListener('click', closeDrawer);
+      drawerBackdrop.addEventListener('click', closeDrawer);
+
+      // Render Drawer Collection Items
+      function renderCollectionsDrawer() {
+        collectionsListEl.innerHTML = '';
+        COLLECTIONS.forEach(col => {
+          const isSelected = col.id === selectedCollectionId;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = `w-full text-left px-5 py-3.5 flex items-center justify-between transition-all border-l-4 ${
+            isSelected 
+              ? 'border-primary bg-primary/5 text-primary font-semibold pl-4' 
+              : 'border-transparent text-on-surface hover:bg-surface-container/50 font-normal'
+          }`;
+          
+          btn.innerHTML = `
+            <div class="flex items-center gap-3">
+              <span class="font-headline-sm text-base tracking-tight ${isSelected ? 'font-medium' : ''}">${col.name}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              ${col.emptyNote ? `<span class="text-[10px] uppercase tracking-wider text-on-surface-variant/40 font-medium">${col.emptyNote}</span>` : ''}
+              ${isSelected ? `<span class="material-symbols-outlined text-[18px] text-primary">chevron_right</span>` : ''}
+            </div>
+          `;
+
+          btn.addEventListener('click', () => {
+            selectedCollectionId = col.id;
+            setCookie('gute_selected_collection', col.id, 365);
+            drawerCurrentTitle.textContent = col.name;
+            renderCollectionsDrawer();
+            renderAll();
+            closeDrawer();
+            
+            // Switch to Catálogo tab automatically if not active
+            const catTab = document.querySelector('.nav-tab[data-target="tab-catalogo"]');
+            if (catTab && !catTab.classList.contains('active')) {
+              catTab.click();
+            }
+          });
+
+          collectionsListEl.appendChild(btn);
+        });
+      }
+
+      // Card Creation
+      function createCard(item, showBuyButton = false) {
+        const status = itemStatusMap[item.id];
+        const card = document.createElement('div');
+        card.dataset.id = item.id;
+        
+        if (showBuyButton) {
+          card.className = 'earring-card cursor-pointer w-full bg-surface-container-lowest rounded-xl p-3 flex flex-col items-center justify-between shadow-sm border border-transparent gap-2.5';
+        } else {
+          card.className = 'earring-card cursor-pointer w-full aspect-square bg-surface-container-lowest rounded-xl p-2.5 flex items-center justify-center shadow-sm border border-transparent';
+        }
+        
+        if (status === 'my-pieces') {
+          card.classList.add('status-my-pieces');
+        } else if (status === 'wishes') {
+          card.classList.add('status-wishes');
+        }
+
+        const imgWrapper = document.createElement('div');
+        imgWrapper.className = showBuyButton ? 'w-full aspect-square flex items-center justify-center' : 'w-full h-full flex items-center justify-center';
+
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.alt = item.name || '';
+        img.className = 'w-full h-full object-contain pointer-events-none select-none';
+        imgWrapper.appendChild(img);
+        card.appendChild(imgWrapper);
+
+        // Buy button rendered exclusively for "Meus Desejos"
+        if (showBuyButton && item.link) {
+          const buyBtn = document.createElement('a');
+          buyBtn.href = item.link;
+          buyBtn.target = '_blank';
+          buyBtn.rel = 'noopener noreferrer';
+          buyBtn.className = 'w-full py-2 px-3 rounded-lg border border-primary/20 bg-primary/5 hover:bg-primary hover:text-white text-primary text-[11px] font-semibold tracking-widest uppercase transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95';
+          buyBtn.innerHTML = `
+            <span>COMPRAR</span>
+            <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+          `;
+          // Prevent card click modal trigger when clicking buy button
+          buyBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+          });
+          card.appendChild(buyBtn);
+        }
+
+        card.addEventListener('click', () => {
+          openModal(item.id);
+        });
+
+        return card;
+      }
+
+      // Sync All Views
+      function renderAll() {
+        // Catálogo filtered by Collection
+        catalogContainer.innerHTML = '';
+        let filteredCatalogItems = [];
+        if (selectedCollectionId === 'geral' || selectedCollectionId === 'convexo') {
+          filteredCatalogItems = JEWELRY_ITEMS;
+        } else {
+          // Other collections are currently empty
+          filteredCatalogItems = [];
+        }
+
+        if (filteredCatalogItems.length === 0) {
+          const currentCol = COLLECTIONS.find(c => c.id === selectedCollectionId);
+          emptyCatalogTitle.textContent = `Nenhuma peça na coleção ${currentCol ? currentCol.name : ''} ainda.`;
+          emptyCatalog.classList.remove('hidden');
+          catalogContainer.classList.add('hidden');
+        } else {
+          emptyCatalog.classList.add('hidden');
+          catalogContainer.classList.remove('hidden');
+          filteredCatalogItems.forEach(item => {
+            catalogContainer.appendChild(createCard(item, false));
+          });
+        }
+
+        // Minha Coleção (Shows all user-selected pieces, no buy button)
+        myPiecesContainer.innerHTML = '';
+        const myPiecesList = JEWELRY_ITEMS.filter(it => itemStatusMap[it.id] === 'my-pieces');
+        if (myPiecesList.length === 0) {
+          emptyMyPieces.classList.remove('hidden');
+        } else {
+          emptyMyPieces.classList.add('hidden');
+          myPiecesList.forEach(item => {
+            myPiecesContainer.appendChild(createCard(item, false));
+          });
+        }
+
+        // Meus Desejos (Shows all user wishes, with refined buy button)
+        wishesContainer.innerHTML = '';
+        const wishesList = JEWELRY_ITEMS.filter(it => itemStatusMap[it.id] === 'wishes');
+        if (wishesList.length === 0) {
+          emptyWishes.classList.remove('hidden');
+        } else {
+          emptyWishes.classList.add('hidden');
+          wishesList.forEach(item => {
+            wishesContainer.appendChild(createCard(item, true));
+          });
+        }
+      }
+
+      // Modal Controls
+      function openModal(itemId) {
+        currentSelectedItemId = itemId;
+        const currentStatus = itemStatusMap[itemId];
+
+        if (currentStatus === 'my-pieces') {
+          badgeMyPieces.classList.remove('hidden');
+          badgeWishes.classList.add('hidden');
+          btnRemoveSelection.classList.remove('hidden');
+        } else if (currentStatus === 'wishes') {
+          badgeMyPieces.classList.add('hidden');
+          badgeWishes.classList.remove('hidden');
+          btnRemoveSelection.classList.remove('hidden');
+        } else {
+          badgeMyPieces.classList.add('hidden');
+          badgeWishes.classList.add('hidden');
+          btnRemoveSelection.classList.add('hidden');
+        }
+
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.classList.add('opacity-100');
+        requestAnimationFrame(() => {
+          modalSheet.classList.remove('translate-y-full');
+        });
+      }
+
+      function closeModal() {
+        modalSheet.classList.add('translate-y-full');
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        currentSelectedItemId = null;
+      }
+
+      modalBackdrop.addEventListener('click', closeModal);
+
+      btnSelectMyPieces.addEventListener('click', () => {
+        if (!currentSelectedItemId) return;
+        itemStatusMap[currentSelectedItemId] = 'my-pieces';
+        persistStatus();
+        renderAll();
+        closeModal();
+      });
+
+      btnSelectWishes.addEventListener('click', () => {
+        if (!currentSelectedItemId) return;
+        itemStatusMap[currentSelectedItemId] = 'wishes';
+        persistStatus();
+        renderAll();
+        closeModal();
+      });
+
+      btnRemoveSelection.addEventListener('click', () => {
+        if (!currentSelectedItemId) return;
+        itemStatusMap[currentSelectedItemId] = null;
+        persistStatus();
+        renderAll();
+        closeModal();
+      });
+
+      // Bottom Tabs Switcher
+      const navTabs = document.querySelectorAll('.nav-tab');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      navTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const target = tab.getAttribute('data-target');
+
+          navTabs.forEach(t => {
+            t.classList.remove('active', 'text-primary');
+            t.classList.add('text-on-surface-variant');
+          });
+          tab.classList.add('active', 'text-primary');
+          tab.classList.remove('text-on-surface-variant');
+
+          tabContents.forEach(section => {
+            if (section.id === target) {
+              section.classList.remove('hidden');
+              section.classList.add('block');
+            } else {
+              section.classList.remove('block');
+              section.classList.add('hidden');
+            }
+          });
+
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+
+      // Zoom Controls (Columns: 1, 2, 3)
+      const zoomConfigs = [
+        { cols: 'grid-cols-3', gap: 'gap-2' },
+        { cols: 'grid-cols-2', gap: 'gap-3' },
+        { cols: 'grid-cols-1', gap: 'gap-4' }
+      ];
+      
+      const savedZoom = parseInt(getCookie('gute_zoom_index'), 10);
+      let zoomIndex = (!isNaN(savedZoom) && savedZoom >= 0 && savedZoom <= 2) ? savedZoom : 2; // Default 1 coluna (imagem ampla)
+
+      function applyZoom(index) {
+        const containers = [catalogContainer, myPiecesContainer, wishesContainer];
+        containers.forEach(container => {
+          zoomConfigs.forEach(conf => {
+            container.classList.remove(conf.cols, conf.gap);
+          });
+          container.classList.add(zoomConfigs[index].cols, zoomConfigs[index].gap);
+        });
+        setCookie('gute_zoom_index', index.toString(), 365);
+      }
+
+      document.getElementById('zoom-in').addEventListener('click', () => {
+        if (zoomIndex < zoomConfigs.length - 1) {
+          zoomIndex++;
+          applyZoom(zoomIndex);
+        }
+      });
+
+      document.getElementById('zoom-out').addEventListener('click', () => {
+        if (zoomIndex > 0) {
+          zoomIndex--;
+          applyZoom(zoomIndex);
+        }
+      });
+
+      // Initial execution
+      applyZoom(zoomIndex);
+      renderCollectionsDrawer();
+      renderAll();
+    });
+  </script>
+</body></html>
